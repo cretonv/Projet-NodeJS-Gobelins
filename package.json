@@ -1,0 +1,15 @@
+{
+  "name": "projet-nodejs",
+  "version": "1.0.0",
+  "description": "Projet du module nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vcreton",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
