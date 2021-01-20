@@ -10,6 +10,7 @@
   "author": "vcreton",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "ws": "^7.4.2"
   }
 }
