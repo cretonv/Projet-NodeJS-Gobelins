@@ -4,12 +4,13 @@
   "description": "Projet du module nodeJS",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon project.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "vcreton",
   "license": "ISC",
   "dependencies": {
+    "needle": "^2.6.0",
     "nodemon": "^2.0.7",
     "ws": "^7.4.2"
   }

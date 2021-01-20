@@ -2,7 +2,7 @@ const { Readable, pipeline, Writable, Transform } = require("stream")
 const http = require("https")
 
 const TWT_API_HOST = "api.twitter.com"
-const TWT_API_PATH = "/2/tweets/sample/stream?tweet.fields=attachments,author_id,geo&expansions=author_id,attachments.media_keys&media.fields=url"
+const TWT_API_PATH = "/2/tweets/search/stream/rules"
 const BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAKWyLwEAAAAA2el4qPKqnO8lHf2VStQiCYN2%2F3U%3Dxi3ZLYejFMrNmnHWrN95RT1iNXo5QXk0DzgFaszDT0qPUcsBnS"
 
 const options = {
@@ -11,7 +11,12 @@ const options = {
     method: "GET",
     headers: {
         Authorization: "Bearer " + BEARER_TOKEN
+    },
+    add: {
+        value: "cat has:images",
+        tag: "cats with images"
     }
+
 }
 
 const tweetStream = new Readable({
