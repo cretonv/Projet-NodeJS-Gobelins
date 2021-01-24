@@ -7,7 +7,8 @@ const jsonParser = new Transform({
         let data = {}
 
         try {
-            data = JSON.parse(chunk)
+            //console.log(chunk.toString())
+            data = JSON.parse(chunk.toString())
         } catch (error){
             console.log(error)
         }
@@ -31,7 +32,56 @@ const logger = new Writable({
     }
 })
 
+const textExtractor = new Transform({
+    writableObjectMode: true,
+
+    transform(chunk, _, callback) {
+        console.log(chunk.data)
+        const text = chunk.data.text + " "
+
+        this.push(text)
+
+        callback()
+    }
+})
+
+const ppExtractor = new Transform({
+    writableObjectMode: true,
+
+    transform(chunk, _, callback) {
+        const text = chunk.data.text + " "
+
+        this.push(text)
+
+        callback()
+    }
+})
+
+const tweetCounter = new Transform({
+    transform(chunk, _, callback) {
+        this.counter++
+
+        this.push(this.counter.toString())
+
+        callback()
+    }
+})
+tweetCounter.counter = 0;
+
+const stringParser = new Transform({
+    writableObjectMode: true,
+
+    transform(chunk, _, callback) {
+        this.push(JSON.stringify(chunk))
+
+        callback()
+    }
+})
+
 module.exports = {
     jsonParser,
-    logger
+    textExtractor,
+    logger,
+    tweetCounter,
+    stringParser,
 }

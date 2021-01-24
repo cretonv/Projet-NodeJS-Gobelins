@@ -7,17 +7,79 @@
         console.log('Dans le navigateur')
         const socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`)
 
-        socket.addEventListener('open', function (event) {
+        /*socket.addEventListener('open', function (event) {
             console.log("connected", event)
             socket.send("Salut les amis")
-        })
-        socket.addEventListener('message', function(event) {
-            console.log("message from server: ", event.data)
+        })*/
+        socket.addEventListener('message', async function(event) {
+            const data = await event.data.text()
+            console.log("message from server: ", data)
+            dataJson = JSON.parse(data)
+            console.log("DETAILS", dataJson.includes.users[0].profile_image_url)
+            createNode(dataJson.includes.users[0].profile_image_url)
         })
 
+        function sendToSocket(newFilter) {
+            socket.send(newFilter)
+        }
+
+
+
     </script>
+    <style>
+        .photos-grid {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-index: -1;
+            display: flex;
+            flex-flow: row wrap;
+        }
+        .photos-grid .photo-container {
+            height: 50px;
+            width: 50px;
+        }
+        .photo-container img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style>
 </head>
 <body>
-    <h1> Index </h1>
+    <h1> Recherche trop cooooooool </h1>
+
+    <form id="cool">
+        <label for="truc">Truc à trouver</label>
+        <input type="text" id="truc" name="truc" required
+               minlength="4" maxlength="12" size="15">
+        <button type="submit"> Fais du coooooool </button>
+    </form>
+
+    <div class="photos-grid">
+
+    </div>
+
+
+    <script>
+        document.querySelector('#cool').addEventListener('submit', function(event) {
+            event.preventDefault()
+            let newFilter = document.querySelector('#truc').value
+            sendToSocket(newFilter)
+        })
+        function createNode(url) {
+            let img = document.createElement("img")
+            img.src = url
+            let div = document.createElement("div")
+            div.classList.add('photo-container')
+            console.log("img: ", img)
+            console.log("div: ", div)
+
+            document.querySelector('.photos-grid').appendChild(div).appendChild(img)
+        }
+    </script>
 </body>
 </html>
